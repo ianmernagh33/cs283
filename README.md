@@ -1,1 +1,1 @@
-# cs283
+# Ian Mernagh's CS283 GitHub Repository
