@@ -18,7 +18,7 @@ Please provide answers to these questions using markdown notation and place them
 
 3. Please provide a link to the repository you are using for this class.
 
-    [My GitHub Repo] (https://github.com/ianmernagh33/cs283)
+    [My GitHub Repo](https://github.com/ianmernagh33/cs283)
 
 4. Briefly describe what you want to get out of this class.
 
