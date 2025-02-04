@@ -120,7 +120,7 @@ int add_student(int fd, int id, char *fname, char *lname, int gpa) {
         memset(&student, 0, sizeof(student_t));
     }
 
-    if (student.id != DELETED_STUDENT_ID) {
+    if (memcmp(&student, &EMPTY_STUDENT_RECORD, sizeof(student_t)) != 0 && student.id != DELETED_STUDENT_ID) {
         printf(M_ERR_DB_ADD_DUP, id);
         return ERR_DB_OP;
     }
@@ -227,7 +227,7 @@ int del_student(int fd, int id) {
     }
 
     while ((bytes_read = read(fd, &student, sizeof(student_t))) == sizeof(student_t)) {
-        if (student.id != DELETED_STUDENT_ID) {
+        if (memcmp(&student, &EMPTY_STUDENT_RECORD, sizeof(student_t)) != 0 && student.id != DELETED_STUDENT_ID) {
             record_count++;
         }
     }
@@ -284,7 +284,7 @@ int print_db(int fd) {
     }
 
     while (read(fd, &student, sizeof(student_t)) == sizeof(student_t)) {
-        if (student.id != DELETED_STUDENT_ID) {
+        if (memcmp(&student, &EMPTY_STUDENT_RECORD, sizeof(student_t)) != 0 && student.id != DELETED_STUDENT_ID) {
             if (!hasRecords) {
                 printf(STUDENT_PRINT_HDR_STRING, "ID", "FIRST_NAME", "LAST_NAME", "GPA");
                 hasRecords = true;
@@ -335,7 +335,7 @@ void print_student(student_t *s) {
         return;
     }
     
-    printf(STUDENT_PRINT_HDR_STRING, "ID", "FIRST NAME", "LAST NAME", "GPA");
+    printf(STUDENT_PRINT_HDR_STRING, "ID", "FIRST_NAME", "LAST_NAME", "GPA");
     printf(STUDENT_PRINT_FMT_STRING, s->id, s->fname, s->lname, s->gpa / 100.0);
 }
 
