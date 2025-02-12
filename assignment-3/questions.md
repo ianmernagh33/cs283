@@ -20,8 +20,7 @@
 - One topic you should have found information on is "redirection". Please provide at least 3 redirection examples that we should implement in our custom shell, and explain what challenges we might have implementing them.
 
     > **Answer**:  
-	 1. Output Redirection (> and >>): Redirects STDOUT to a file. > overwrites while >> appends. This might
-	 > cause challenges when ensuring proper file permissions and handling cases where a file does not exist.
+	 1. Output Redirection (> and >>): Redirects STDOUT to a file. > overwrites while >> appends. This might cause challenges when ensuring proper file permissions and handling cases where a file does not exist.
 	 2. Input Redirection (<): Reads input from a file instead of STDIN. Challenges may include handling file errors and ensuring correct input parsing.
 	 3. Error Redirection (2> and 2>>): Redirects STDERR to a file. One challenge that might arise here is separating error messages from regular output while maintaining usability.
 
