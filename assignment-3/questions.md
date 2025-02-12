@@ -35,4 +35,4 @@
 
 - How should our custom shell handle errors from commands that fail? Consider cases where a command outputs both STDOUT and STDERR. Should we provide a way to merge them, and if so, how?
 
-    > **Answer**:  I think our shell should display errors clearly while allowing users to decide if they want to merge STDOUT and STDERR using 2>&1. Handling failures should include returning proper exit codes, providing informative messages, and ensuring users can redirect errors separately or combined based on their needs.
+    > **Answer**:  I think our shell should display errors clearly while allowing users to decide if they want to merge STDOUT and STDERR. If they decide to merge STDOUT and STDERR we should use redirection to put both outputs in a single log or stream that they can access. Handling failures should include returning proper exit codes, providing informative messages, and ensuring users can redirect errors separately or combined based on their needs.
