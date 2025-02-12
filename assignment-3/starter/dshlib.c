@@ -32,6 +32,7 @@
  *  Standard Library Functions You Might Want To Consider Using
  *      memset(), strcmp(), strcpy(), strtok(), strlen(), strchr()
  */
+
 int build_cmd_list(char *cmd_line, command_list_t *clist) {
     char *command;
     int commandCount = 0;
@@ -89,9 +90,8 @@ int build_cmd_list(char *cmd_line, command_list_t *clist) {
         commandCount++;
         command = strtok(NULL, PIPE_STRING);
     }
-    
+
     // Update command count in list
     clist->num = commandCount;
     return OK;
 }
-
