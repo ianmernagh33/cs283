@@ -79,7 +79,7 @@ int exec_cmd(cmd_buff_t *cmd);
 #define CMD_ERR_EXECUTE 	 "error: problem executing\n"
 
 //dragon ascii art
-#define DRAGON_ASCII_ART "\
+#define MARIO "\
                                                                         @%%%%                       \n\
                                                                      %%%%%%                         \n\
                                                                     %%%%%%                          \n\

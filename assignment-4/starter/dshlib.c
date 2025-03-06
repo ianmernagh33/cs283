@@ -197,6 +197,6 @@ int build_cmd_buff(char *cmd_line, cmd_buff_t *cmd_buff) {
 Built_In_Cmds match_command(const char *input) {
     if (strcmp(input, "exit") == 0) return BI_CMD_EXIT;
     if (strcmp(input, "cd") == 0) return BI_CMD_CD;
-    if (strcmp(input, "dragon") == 0) return BI_CMD_DRAGON;
+    if (strcmp(input, "mario") == 0) return BI_CMD_DRAGON;
     return BI_NOT_BI;
 }
