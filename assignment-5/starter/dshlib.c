@@ -243,11 +243,12 @@ void executeProcess(cmd_buff_t *cmd) {
 }
 
 int exec_cmd(cmd_buff_t *cmd) {
-    if (exec_built_in_cmd(cmd) == BI_EXECUTED) {
-        return OK;
-    }
-    pid_t pid = fork();
-    if (pid == 0) {
+  	Built_In_Cmds result = exec_built_in_cmd(cmd);
+   if (result == BI_EXECUTED || result == BI_CMD_EXIT) {
+   	return OK;
+   }
+   pid_t pid = fork();
+   if (pid == 0) {
         executeProcess(cmd);
     } else if (pid > 0) {
         int status;
