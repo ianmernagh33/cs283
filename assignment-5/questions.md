@@ -1,15 +1,15 @@
 1. Your shell forks multiple child processes when executing piped commands. How does your implementation ensure that all child processes complete before the shell continues accepting user input? What would happen if you forgot to call waitpid() on all child processes?
 
-_answer here_
+When executing piped commands, the shell ensures all child processes complete by forking multiple processes. To ensure all child processes are complete before accepting a new input from the user, it stores the pid of the child processes and calls waitpid() on each PID to put off execution until all the child processes terminate. If waitpid() is not called, zombie processes may build up and use system resources. THe shell may also retunr to prompting before commands are done executing, which could lead to incomplete output or other unexpected side effects. 
 
 2. The dup2() function is used to redirect input and output file descriptors. Explain why it is necessary to close unused pipe ends after calling dup2(). What could go wrong if you leave pipes open?
 
-_answer here_
+When you use dup2() to redirect input/output in a pipeline, closing unused pipes is necessary. If pipes are left open a few things can happen. Open pipes may prevent EOF detection from occuring which may cause commands that read from them hang. It also increases resource consumption and exceed systems limits on open file descriptors. Finally, it avoids interference to prevent data corruption and deadlocks. So, by closing unused ends immediatley after using dup2(), it ensures proper data flow and process termination. 
 
 3. Your shell recognizes built-in commands (cd, exit, dragon). Unlike external commands, built-in commands do not require execvp(). Why is cd implemented as a built-in rather than an external command? What challenges would arise if cd were implemented as an external process?
 
-_answer here_
+cd is implemented as a built-in command rather than an external command because it modifies the working directory of the shell using chdir(). Since each external command is executed in a child process, if cd was implemented as an external command it would mean that the current working directory would only affect the child process and not the parent shell. Or, it would mean that the user's shell session would remain in the same direcotry and not change, which would make cd useless.
 
 4. Currently, your shell supports a fixed number of piped commands (CMD_MAX). How would you modify your implementation to allow an arbitrary number of piped commands while still handling memory allocation efficiently? What trade-offs would you need to consider?
 
-_answer here_
+For the shell to support an arbitrary number of piped commands while still handing memory allocation efficiently, we could use dynamic memory allocation, such as malloc() and realloc() rahter than fixed-size arrays to store command structures. A dynamically linked list may also be a good choice for storing pipe-related file descriptors and process info. Finally, a loop may need to create pipes and fork child processes. This does come with some challenges, such have increaesd complexity of memory allocation, potential loss of efficiency, and overall complexity of implementation. Having to deal with allocation, deallocation, and error handling may prove difficult. 
