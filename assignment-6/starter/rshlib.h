@@ -1,5 +1,5 @@
 #ifndef __RSH_LIB_H__
-    #define __RSH_LIB_H__
+#define __RSH_LIB_H__
 
 #include "dshlib.h"
 

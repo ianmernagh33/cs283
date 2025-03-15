@@ -101,6 +101,32 @@ char* parse_unquoted_string(char* str, cmd_buff_t *cmd_buff) {
     return str;
 }
 
+command_list_t parse_commands(char *input) {
+    command_list_t cmd_list;
+    cmd_list.num = 0;
+    char *token = strtok(input, "|");
+    while (token != NULL && cmd_list.num < CMD_MAX) {
+        cmd_buff_t *cmd = &cmd_list.commands[cmd_list.num];
+        cmd->argc = 0;
+        char *arg = token;
+        while (*arg != '\0'){
+            while(isspace((unsigned char)*arg)){
+                arg++;
+            }
+            if(*arg == '"'){
+                arg = parse_quoted_string(arg, cmd);
+            } else if (*arg != '\0'){
+                arg = parse_unquoted_string(arg, cmd);
+            } else {
+                break;
+            }
+        }
+        cmd_list.num++;
+        token = strtok(NULL, "|");
+    }
+    return cmd_list;
+}
+
 int allocate_cmd_buffer(cmd_buff_t *cmd_buff) {
     cmd_buff->_cmd_buffer = malloc(SH_CMD_MAX);
 
