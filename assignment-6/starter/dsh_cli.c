@@ -97,8 +97,7 @@ void parse_args(int argc, char *argv[], cmd_args_t *cargs) {
               print_usage(argv[0]);
               break;
           default:
-              print_usage(argv[0]);
-      }
+              print_usage(argv[0]); }
   }
 
   if (cargs->threaded_server && cargs->mode != MODE_SSVR) {
