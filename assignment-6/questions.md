@@ -1,19 +1,19 @@
 1. How does the remote client determine when a command's output is fully received from the server, and what techniques can be used to handle partial reads or ensure complete message transmission?
 
-_answer here_
+The remote client in our implementation determines when a command's output is fully received from the server by checking for a zero-length message, effectively an EOF signal, sent by the server via the send_message_eof() function. The client's receiving loop accumulates data into a buffer until the recv() function returns 0, indicating the end of the data stream. To handle partial reads, the client's loop appends the received data to the buffer, using the return value of recv() to track the number of bytes received, ensuring that the entire message is reconstructed before processing.
 
 2. This week's lecture on TCP explains that it is a reliable stream protocol rather than a message-oriented one. Since TCP does not preserve message boundaries, how should a networked shell protocol define and detect the beginning and end of a command sent over a TCP connection? What challenges arise if this is not handled correctly?
 
-_answer here_
+Because TCP is a reliable stream protocol that does not preserve message boundaries, our networked shell protocol defines and detects the beginning and end of a command by relying on null-terminated strings for client commands, and EOF signals for server output. The client sends commands as null-terminated strings, and the server reads until it encounters the null terminator. The server signals the end of its output by sending an EOF signal. Challenges arise if these boundaries are not handled correctly. For instance, if the client fails to null-terminate the command, the server might read beyond the intended command, leading to errors. Similarly, if the server omits the EOF signal, the client might indefinitely wait for more data. Partial reads, if not handled, can corrupt commands or output, causing unpredictable behavior.
 
 3. Describe the general differences between stateful and stateless protocols.
 
-_answer here_
+Stateful protocols maintain information about past client interactions, allowing the server to remember the client's state between requests. This enables complex and reliable services but can be resource-intensive. Stateless protocols, on the other hand, treat each request independently, without retaining any client state. This simplicity and scalability come at the cost of limited service capabilities, often requiring clients to send more information with each request. Our remote shell implementation is largely stateless, with each command executed independently, except for the stateful TCP connection itself.
 
 4. Our lecture this week stated that UDP is "unreliable". If that is the case, why would we ever use it?
 
-_answer here_
+Despite its inherent unreliability, UDP is used in scenarios where speed and low latency are paramount. In real-time applications such as video streaming or online gaming, the loss of some packets is often acceptable in exchange for faster performance. UDP's minimal overhead and lack of connection establishment make it suitable for such applications. Additionally, UDP supports broadcast and multicast, making it useful for applications that need to send data to multiple recipients simultaneously.
 
 5. What interface/abstraction is provided by the operating system to enable applications to use network communications?
 
-_answer here_
+The operating system provides the sockets API as the interface/abstraction to enable applications to use network communications. This API offers functions like socket(), bind(), listen(), accept(), send(), and recv(), allowing applications to establish network connections and exchange data. In our remote shell code, we utilize these functions to create, manage, and communicate over TCP sockets, abstracting the low-level complexities of network communication.
